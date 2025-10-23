@@ -1,9 +1,6 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import RideBooking from '@/components/block/ride-booking';
-import DriverDashboard from '@/components/block/driver-dashboard';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { NavigationIcon, CarIcon, UserIcon, Car, MapPin, CreditCard } from 'lucide-react';
 import Link from 'next/link';
@@ -34,7 +31,7 @@ export default function Home() {
       <main className="container mx-auto px-4 py-8">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Get where you're going
+            Get where you&apos;re going
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
             The smartest way to get around. Choose your ride, set your location, and go.

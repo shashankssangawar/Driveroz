@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useRouting } from '@/hooks/useRouting';
 import { CarIcon, WalletIcon, StarIcon, ClockIcon, NavigationIcon, UserIcon } from 'lucide-react';
-import MapContainerComponent from '@/components/block/map-container';
+import MapContainerComponent from '@/components/block/dynamic-map';
 
 // Mock ride requests data
 const MOCK_RIDE_REQUESTS = [
@@ -58,7 +58,7 @@ export default function DriverDashboard() {
 
   // Initialize driver location
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -70,6 +70,9 @@ export default function DriverDashboard() {
           setDriverLocation([28.6139, 77.2090]);
         }
       );
+    } else {
+      // Default to Delhi for SSR
+      setDriverLocation([28.6139, 77.2090]);
     }
   }, []);
 
@@ -105,8 +108,6 @@ export default function DriverDashboard() {
   const handleGoOnline = () => {
     setIsOnline(true);
     setRideRequests([]);
-
-    'outline'
   };
 
   const handleGoOffline = () => {

@@ -175,7 +175,7 @@ function CurrentLocationButton({ onGetLocation, loading }) {
     onGetLocation();
 
     // If we have a location, center the map on it
-    if (navigator.geolocation) {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -231,7 +231,7 @@ export default function MapContainerComponent({
   };
 
   const handleGetCurrentLocation = () => {
-    if (navigator.geolocation) {
+    if (typeof window !== 'undefined' && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;

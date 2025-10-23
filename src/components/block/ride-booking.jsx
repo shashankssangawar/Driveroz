@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouting } from '@/hooks/useRouting';
 import { ArrowUpDown, NavigationIcon, SwapIcon } from 'lucide-react';
-import MapContainerComponent from './map-container';
+import MapContainerComponent from './dynamic-map';
 import LocationInput from '../ui/location-input';
 import { Separator } from '../ui/separator';
 
@@ -44,8 +44,10 @@ export default function RideBooking() {
     setRouteError(null);
 
     return new Promise((resolve) => {
-      if (!navigator.geolocation) {
-        alert('Geolocation is not supported by your browser');
+      if (typeof window === 'undefined' || !navigator.geolocation) {
+        if (typeof window !== 'undefined') {
+          alert('Geolocation is not supported by your browser');
+        }
         setLocationLoading(prev => ({ ...prev, [type]: false }));
         resolve(null);
         return;
