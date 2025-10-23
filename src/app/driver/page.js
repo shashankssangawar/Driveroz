@@ -105,6 +105,8 @@ export default function DriverDashboard() {
   const handleGoOnline = () => {
     setIsOnline(true);
     setRideRequests([]);
+
+    'outline'
   };
 
   const handleGoOffline = () => {
@@ -157,18 +159,18 @@ export default function DriverDashboard() {
   return (
     <div className="h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b p-4">
+      <header className="shadow-sm border-b p-4">
         <div className="container mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <CarIcon className="h-8 w-8 text-green-600" />
+            <CarIcon className="h-8 w-8 text-primary" />
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Driver Dashboard</h1>
-              <p className="text-sm text-gray-600">Welcome back, John!</p>
+              <h1 className="text-2xl font-bold">Driver Dashboard</h1>
+              <p className="text-sm text-muted-foreground">Welcome back, John!</p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <Badge variant={isOnline ? "default" : "secondary"} className="text-sm">
+            <Badge variant={isOnline ? "default" : "secondary"} className="text-sm py-2!">
               {isOnline ? (
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
@@ -193,7 +195,7 @@ export default function DriverDashboard() {
         </div>
       </header>
 
-      <div className="flex-1 flex">
+      <div className="h-screen flex flex-col md:flex-row">
         {/* Main Map */}
         <div className="flex-1 relative">
           <MapContainerComponent
@@ -205,15 +207,15 @@ export default function DriverDashboard() {
         </div>
 
         {/* Side Panel */}
-        <div className="w-96 bg-gray-50 border-l overflow-y-auto">
+        <div className="w-full md:w-96 md:h-full h-[50dvh] shadow-lg overflow-y-auto">
           {/* Navigation Tabs */}
-          <div className="border-b bg-white">
+          <div className="border-b bg-card">
             <div className="flex">
               <button
                 onClick={() => setActiveTab('dashboard')}
                 className={`flex-1 py-3 px-4 text-center font-medium ${activeTab === 'dashboard'
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                  ? 'text-primary border-b-2 border-primary'
+                  : 'text-muted-foreground/70 hover:text-muted-foreground'
                   }`}
               >
                 Dashboard
@@ -221,8 +223,8 @@ export default function DriverDashboard() {
               <button
                 onClick={() => setActiveTab('rides')}
                 className={`flex-1 py-3 px-4 text-center font-medium ${activeTab === 'rides'
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                  ? 'text-primary border-b-2 border-primary'
+                  : 'text-muted-foreground/70 hover:text-muted-foreground'
                   }`}
               >
                 Rides
@@ -285,7 +287,7 @@ export default function DriverDashboard() {
                 <Card>
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg flex items-center gap-2">
-                      <ClockIcon className="h-5 w-5 text-blue-600" />
+                      <ClockIcon className="h-5 w-5 text-primary" />
                       Current Status
                     </CardTitle>
                   </CardHeader>
@@ -294,7 +296,7 @@ export default function DriverDashboard() {
                       <div className="space-y-3">
                         <div className="bg-blue-50 p-3 rounded-lg">
                           <div className="font-semibold text-blue-800">Active Ride</div>
-                          <div className="text-sm text-blue-600">
+                          <div className="text-sm text-primary">
                             Taking {currentRide.passenger} to {currentRide.destination}
                           </div>
                         </div>
@@ -309,7 +311,7 @@ export default function DriverDashboard() {
                       </div>
                     ) : isOnline ? (
                       <div className="text-center py-4">
-                        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
                         <p className="text-gray-600">Waiting for ride requests...</p>
                       </div>
                     ) : (
@@ -329,15 +331,15 @@ export default function DriverDashboard() {
                 {isOnline && rideRequests.length > 0 && (
                   <Card>
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg text-green-600">
+                      <CardTitle className="text-lg">
                         New Ride Requests ({rideRequests.length})
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       {rideRequests.map((ride) => (
-                        <div key={ride.id} className="border rounded-lg p-3 bg-white shadow-sm">
+                        <div key={ride.id} className="border rounded-lg p-3 shadow-sm">
                           <div className="flex items-center gap-2 mb-2">
-                            <UserIcon className="h-4 w-4 text-gray-600" />
+                            <UserIcon className="h-4 w-4 text-muted-foreground" />
                             <span className="font-semibold">{ride.passenger}</span>
                             <div className="flex items-center gap-1 ml-auto">
                               <StarIcon className="h-3 w-3 text-yellow-500 fill-current" />
@@ -345,7 +347,7 @@ export default function DriverDashboard() {
                             </div>
                           </div>
 
-                          <div className="space-y-1 text-sm text-gray-600 mb-3">
+                          <div className="space-y-1 text-sm text-muted-foreground mb-3">
                             <div className="flex items-center gap-2">
                               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                               <span className="truncate">{ride.pickup}</span>
@@ -359,7 +361,7 @@ export default function DriverDashboard() {
                           <div className="flex justify-between items-center mb-3">
                             <div className="text-sm">
                               <div className="font-semibold">${ride.fare}</div>
-                              <div className="text-gray-500">{ride.distance} km • {ride.eta} min</div>
+                              <div className="text-muted-foreground">{ride.distance} km • {ride.eta} min</div>
                             </div>
                           </div>
 
@@ -391,17 +393,17 @@ export default function DriverDashboard() {
                   <Card>
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg flex items-center gap-2">
-                        <NavigationIcon className="h-5 w-5 text-blue-600" />
+                        <NavigationIcon className="h-5 w-5 text-primary" />
                         Current Ride
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
-                        <div className="flex items-center gap-2 p-2 bg-blue-50 rounded">
-                          <UserIcon className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center gap-2 p-2 rounded">
+                          <UserIcon className="h-4 w-4 text-primary" />
                           <div>
                             <div className="font-semibold">{currentRide.passenger}</div>
-                            <div className="text-sm text-blue-600 flex items-center gap-1">
+                            <div className="text-sm text-primary flex items-center gap-1">
                               <StarIcon className="h-3 w-3 fill-current" />
                               {currentRide.rating}
                             </div>
@@ -410,21 +412,21 @@ export default function DriverDashboard() {
 
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Pickup:</span>
-                            <span className="font-medium">{currentRide.pickup}</span>
+                            <span className="font-medium">Pickup:</span>
+                            <span className="text-muted-foreground">{currentRide.pickup}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Destination:</span>
-                            <span className="font-medium">{currentRide.destination}</span>
+                            <span className="font-medium">Destination:</span>
+                            <span className="text-muted-foreground">{currentRide.destination}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-600">Fare:</span>
-                            <span className="font-semibold text-green-600">${currentRide.fare}</span>
+                            <span className="text-muted-foreground">Fare:</span>
+                            <span className="font-semibold text-primary">${currentRide.fare}</span>
                           </div>
                         </div>
 
                         {route && (
-                          <div className="bg-gray-50 p-2 rounded text-sm">
+                          <div className="p-2 rounded text-sm">
                             <div className="flex justify-between">
                               <span>ETA to pickup:</span>
                               <span className="font-semibold">{Math.ceil(route.duration / 60)} min</span>

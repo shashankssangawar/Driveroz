@@ -6,6 +6,7 @@ import { useRouting } from '@/hooks/useRouting';
 import { ArrowUpDown, NavigationIcon, SwapIcon } from 'lucide-react';
 import MapContainerComponent from './map-container';
 import LocationInput from '../ui/location-input';
+import { Separator } from '../ui/separator';
 
 const RIDE_TYPES = [
   { id: 'mini', name: 'Mini', price: 10, eta: 5 },
@@ -257,11 +258,11 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
       </div>
 
       {/* Booking Panel */}
-      <div className="w-full md:w-96 bg-white shadow-lg p-6 overflow-y-auto">
+      <div className="w-full md:w-96 md:h-full h-[50dvh] shadow-lg overflow-y-auto">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <NavigationIcon className="h-6 w-6 text-blue-600" />
+              <NavigationIcon className="h-6 w-6 text-primary" />
               Book a Ride
             </CardTitle>
           </CardHeader>
@@ -275,7 +276,7 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
                   size="sm"
                   onClick={handleUseCurrentLocationAsPickup}
                   disabled={locationLoading.pickup}
-                  className="h-6 text-xs text-blue-600 hover:text-blue-700"
+                  className="h-6 text-xs"
                 >
                   {locationLoading.pickup ? '📍 Getting...' : '📍 Use Current'}
                 </Button>
@@ -293,11 +294,11 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
             {/* Swap Locations Button */}
             <div className="flex justify-center">
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 onClick={handleSwapLocations}
                 disabled={!userLocation || !destination}
-                className="h-8 w-8 rounded-full bg-gray-100 hover:bg-gray-200 transition-all"
+                className="h-8 w-8 rounded-full transition-all"
                 title="Swap locations"
               >
                 <ArrowUpDown className="h-4 w-4" />
@@ -313,7 +314,7 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
                   size="sm"
                   onClick={handleUseCurrentLocationAsDestination}
                   disabled={locationLoading.destination}
-                  className="h-6 text-xs text-blue-600 hover:text-blue-700"
+                  className="h-6 text-xs"
                 >
                   {locationLoading.destination ? '📍 Getting...' : '📍 Use Current'}
                 </Button>
@@ -330,57 +331,61 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
 
             {/* Error Display */}
             {routeError && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-md">
-                <div className="text-sm text-red-800 flex items-center gap-2">
+              <div className="p-3 bg-destructive/20 border border-destructive rounded-md">
+                <div className="text-sm text-destructive flex items-center gap-2">
                   <span>⚠️</span>
                   <span>{routeError}</span>
                 </div>
               </div>
             )}
 
+            <Separator />
+
             {/* Route Info */}
             {route && (
-              <Card className="bg-blue-50 border-blue-200">
-                <CardContent className="p-4">
-                  <h4 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
+              <Card className="border-foreground pt-4">
+                <CardContent>
+                  <h4 className="font-semibold mb-6 flex items-center gap-2">
                     <NavigationIcon className="h-4 w-4" />
                     Route Information
                   </h4>
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <div className="font-medium text-blue-700">Distance</div>
-                      <div className="text-blue-900 font-semibold">{(route.distance / 1000).toFixed(2)} km</div>
+                      <div className="font-medium">Distance</div>
+                      <div className="text-sm text-muted-foreground font-semibold">{(route.distance / 1000).toFixed(2)} km</div>
                     </div>
                     <div>
-                      <div className="font-medium text-blue-700">Duration</div>
-                      <div className="text-blue-900 font-semibold">{Math.ceil(route.duration / 60)} mins</div>
+                      <div className="font-medium">Duration</div>
+                      <div className="text-sm text-muted-foreground font-semibold">{Math.ceil(route.duration / 60)} mins</div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             )}
 
+            <Separator />
+
             {/* Ride Options */}
-            <div>
+            <div className='mt-6'>
               <label className="text-sm font-medium block mb-3">Choose Your Ride</label>
               <div className="space-y-3">
                 {RIDE_TYPES.map((ride) => (
                   <div
                     key={ride.id}
                     className={`p-4 border-2 rounded-xl cursor-pointer transition-all duration-200 ${selectedRide?.id === ride.id
-                      ? 'border-blue-500 bg-blue-50 shadow-md scale-[1.02]'
-                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      ? 'border-primary shadow-md scale-[1.02]'
+                      : 'border-muted-foreground/80 hover:border-muted-foreground hover:bg-foreground/5'
                       }`}
                     onClick={() => setSelectedRide(ride)}
                   >
                     <div className="flex justify-between items-center mb-2">
-                      <span className="font-semibold text-gray-900">{ride.name}</span>
-                      <span className="text-blue-600 font-bold">${ride.price}/km</span>
+                      <span className="font-semibold">{ride.name}</span>
+                      <span className="font-bold">${ride.price}/km</span>
                     </div>
                     <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">ETA: {ride.eta} mins</span>
+                      <span className="text-muted-foreground">ETA: {ride.eta} mins</span>
                       {route && (
-                        <span className="font-semibold text-green-600">
+                        <span className="font-semibold text-primary">
                           ${(2 + ride.price * (route.distance / 1000) * 0.1).toFixed(2)}
                         </span>
                       )}
@@ -393,7 +398,7 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
             {/* Action Buttons */}
             <div className="space-y-3 pt-4">
               <Button
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-all"
+                className="w-full"
                 onClick={handleCalculateRoute}
                 disabled={!canCalculateRoute}
               >
@@ -403,12 +408,13 @@ Your driver will arrive in approximately ${selectedRide.eta} minutes!`);
                     Calculating Route...
                   </div>
                 ) : (
-                  `📏 Show Route & Calculate Fare`
+                  `Calculate Fare`
                 )}
               </Button>
 
               <Button
-                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-xl text-lg transition-all shadow-lg"
+                variant={'outline'}
+                className="w-full"
                 onClick={handleBookRide}
                 disabled={!canBookRide}
               >

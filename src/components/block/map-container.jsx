@@ -10,6 +10,7 @@ import {
   LocateFixed,
   User
 } from 'lucide-react';
+import { Button } from '../ui/button';
 
 // Fix for default markers
 delete L.Icon.Default.prototype._getIconUrl;
@@ -85,7 +86,8 @@ const createCustomIcon = (type, label = '') => {
           top: ${size + 4}px;
           left: 50%;
           transform: translateX(-50%);
-          background: white;
+          background: #FFF;
+          color: #000;
           padding: 2px 6px;
           border-radius: 4px;
           font-size: 11px;
@@ -141,9 +143,9 @@ function LocationMarker({ position, type, label }) {
         <div className="text-center min-w-[120px]">
           <div className="flex items-center justify-center gap-2 mb-2">
             <div className={`w-3 h-3 rounded-full ${type === 'user' ? 'bg-green-500' :
-                type === 'driver' ? 'bg-blue-500' :
-                  type === 'destination' ? 'bg-red-500' :
-                    'bg-purple-500'
+              type === 'driver' ? 'bg-blue-500' :
+                type === 'destination' ? 'bg-red-500' :
+                  'bg-purple-500'
               }`}></div>
             <strong className="text-sm capitalize">
               {type === 'driver' ? 'Driver' :
@@ -152,11 +154,11 @@ function LocationMarker({ position, type, label }) {
                     'Destination'}
             </strong>
           </div>
-          <div className="text-xs text-gray-600 bg-gray-50 p-2 rounded">
+          <div className="text-xs p-2 rounded">
             {position[0].toFixed(6)}, {position[1].toFixed(6)}
           </div>
           {type === 'driver' && (
-            <div className="mt-2 text-xs text-blue-600 font-medium">
+            <div className="mt-2 text-xs text-primary font-medium">
               🕒 Approx. 5 min away
             </div>
           )}
@@ -189,10 +191,10 @@ function CurrentLocationButton({ onGetLocation, loading }) {
   return (
     <div className="leaflet-top leaflet-right">
       <div className="leaflet-control">
-        <button
+        <Button
+          variant={'secondary'}
           onClick={handleClick}
           disabled={loading}
-          className="bg-white hover:bg-gray-50 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded shadow flex items-center gap-2"
           style={{ margin: '10px' }}
         >
           {loading ? (
@@ -201,7 +203,7 @@ function CurrentLocationButton({ onGetLocation, loading }) {
             '📍'
           )}
           Current Location
-        </button>
+        </Button>
       </div>
     </div>
   );

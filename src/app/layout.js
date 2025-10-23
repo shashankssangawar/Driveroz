@@ -1,19 +1,13 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const font = Outfit({
   subsets: ["latin"],
 });
 
 export const metadata = {
-  title: 'RideShare - Book Your Ride',
+  title: 'Driveroz | Book Your Ride',
   description: 'Book rides instantly with RideShare',
 };
 
@@ -21,7 +15,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${font.className} antialiased`}
       >
         <ThemeProvider
           attribute="class"
